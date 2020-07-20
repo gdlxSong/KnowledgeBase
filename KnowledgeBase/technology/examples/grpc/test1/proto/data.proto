@@ -1,0 +1,21 @@
+syntax="proto3";
+
+
+package proto;
+
+
+message Request {
+    string req = 1;
+}
+
+
+
+message Response {
+    string resp = 1;
+}
+
+
+
+service Message {
+    rpc GetMessage (Request) returns (Response);
+}
