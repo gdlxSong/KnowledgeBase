@@ -17,3 +17,6 @@ https://segmentfault.com/a/1190000018536993
 [2] 关于版本降级？
 
     以protobuf为例子，首先git下载protobuf，然后checkout v1.26.1, 使用go mod管理，保持module名字于高版本go.mod一致，会省下很多麻烦，其次就是编译生成。之后将protoc.exe也替换成2.6
+
+
+[3] 第三方库的undefine一般是由于版本不对造成的，可以对其进行goto definition然后更换版本。

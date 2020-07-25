@@ -40,6 +40,10 @@
 
     原因是protobuf生成的go代码版本比当前grpc的版本高
 
+6. balancer.PickOptions只有在grpc 1.27.0 以下的版本才会有
+
+
+
 
 ## 测试例子
 
