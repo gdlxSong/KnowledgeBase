@@ -10,6 +10,13 @@ branch是git的一个重点，可以用来对项目开发多个功能进行并�
          \ui---\uiweb--------\       /
                 \uiclient-----------/
 
+此外你需要知道分支是分类的，首先本地有远程分支和本地分支。fetch用于同步远程分支（将远程服务器仓库的最新内容同步到本机的远程分支上）。
+
+### 跟踪分支
+
+从远程分支 checkout 出来的本地分支，称为 跟踪分支 (tracking branch)。直接与远程主机的分支联系，可以通过push和pull来进行同步。如clone的时候master就是跟踪分支，explain：跟踪分支在远程主机有对应的分支（区别于本地创建但没有push的分支）。
+
+
 
 
 ## How
@@ -20,8 +27,10 @@ branch是git的一个重点，可以用来对项目开发多个功能进行并�
 $ git branch branchname
 
 options:
-    -B:强行创建
+    -B:强行创建，覆盖已有同名分支。
 ```
+
+
 
 
 ### 查看分支
@@ -43,6 +52,8 @@ $ git checkout branchname
 ```bash
 $ git push origin newbranch:newbranch
 ```
+
+
 
 
 ## Reference
