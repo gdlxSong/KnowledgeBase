@@ -15,6 +15,8 @@
 
 [5] https://godoc.org/google.golang.org/grpc/resolver
 
+[6] https://www.gitbook.com/book/skyao/learning-grpc
+
 ## 问题记录和回答
 
 1. grpc.ClientConn.DialContext是如何工作的，其target的规则是什么？（https://godoc.org/google.golang.org/grpc#DialContext）
@@ -41,6 +43,12 @@
     原因是protobuf生成的go代码版本比当前grpc的版本高
 
 6. balancer.PickOptions只有在grpc 1.27.0 以下的版本才会有
+
+7. 今天突然想起一个问题，Intercepter是在grpc的客户端使用（感觉这玩意一般在server端，如gin的中间件），那么有什么用？拦截什么？
+
+
+8. 如何从grpc的流中获取元数据？没有context
+
 
 
 
