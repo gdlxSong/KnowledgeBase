@@ -20,19 +20,31 @@ type CallOption interface {
 所以所有的CallOption都是被grpc预定义的了的。在grpc/rpc_util.go。
 
 ```go
-# 指定Content-Type的子类型。如
+// 指定Content-Type的子类型,其实就是指定CodeC（编码解码器）,需要配合ForceCodec
 func CallContentSubtype(contentSubtype string) CallOption
+// CallCustomCodec behaves like ForceCodec, but accepts a grpc.Codec instead of an encoding.Codec.
 func CallCustomCodec(codec Codec) CallOption
+// FailFast is the opposite of WaitForReady. Deprecated: use WaitForReady.
 func FailFast(failFast bool) CallOption
+// 指定消息的编码解码器
 func ForceCodec(codec encoding.Codec) CallOption
+// Header returns a CallOptions that retrieves the header metadata for a unary RPC.
 func Header(md *metadata.MD) CallOption
+// sets the maximum message size in bytes the client can receive.
 func MaxCallRecvMsgSize(bytes int) CallOption
+// sets the maximum message size in bytes the client can send.
 func MaxCallSendMsgSize(bytes int) CallOption
+// ？？？
 func MaxRetryRPCBufferSize(bytes int) CallOption
+// 接受对端信息
 func Peer(p *peer.Peer) CallOption
+// 用于指定call的公钥（服务端证书提取）
 func PerRPCCredentials(creds credentials.PerRPCCredentials) CallOption
+// 获取服务端设置的trailer
 func Trailer(md *metadata.MD) CallOption
+//sets the compressor used when sending the request. If WithCompressor is also set, UseCompressor has higher priority.
 func UseCompressor(name string) CallOption
+// 连接行为配置
 func WaitForReady(waitForReady bool) CallOption
 ```
 
@@ -229,6 +241,7 @@ type DialOption interface {
 	apply(*dialOptions)
 }
 
+// 
 func FailOnNonTempDialError(f bool) DialOption
 # 用于验证，仅和WithInsecure()一起用，如果存在TransportCredentials，则该值无效。
 func WithAuthority(a string) DialOption
@@ -240,10 +253,11 @@ func WithBackoffMaxDelay(md time.Duration) DialOption
 func WithBalancerName(balancerName string) DialOption
 # 使用block来connect，此时Dial\*的ctx超时对握手协商过程起作用
 func WithBlock() DialOption
-# 
+# 指定stream的链式拦截器
 func WithChainStreamInterceptor(interceptors ...StreamClientInterceptor) DialOption
-# 
+# 指定一元的链式拦截器
 func WithChainUnaryInterceptor(interceptors ...UnaryClientInterceptor) DialOption
+// 
 func WithChannelzParentID(id int64) DialOption
 # 用于指定编码解码器
 func WithCodec(c Codec) DialOption
@@ -251,12 +265,13 @@ func WithCodec(c Codec) DialOption
 func WithCompressor(cp Compressor) DialOption
 # 指定connect协商参数
 func WithConnectParams(p ConnectParams) DialOption
-# 
+# 指定connect连接代理
 func WithContextDialer(f func(context.Context, string) (net.Conn, error)) DialOption
 # 用于指定证书和token，一起指定。
 func WithCredentialsBundle(b credentials.Bundle) DialOption
 # 指定接受消息的解压器
 func WithDecompressor(dc Decompressor) DialOption
+# 指定ClientConn的默认CallOptions
 func WithDefaultCallOptions(cos ...CallOption) DialOption
 func WithDefaultServiceConfig(s string) DialOption
 # 就是指定connect协商过程的代理f
