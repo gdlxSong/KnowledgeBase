@@ -49,6 +49,7 @@
 
 8. 如何从grpc的流中获取元数据？没有context
 
+    don't worry, Stream接口存在Context方法。
 
 
 

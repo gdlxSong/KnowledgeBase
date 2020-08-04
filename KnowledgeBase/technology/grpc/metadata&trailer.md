@@ -24,9 +24,6 @@ func (md MD) Set(k string, vals ...string)
 
 ### 使用
 
-metadata在哪里被使用？
-
-1. 在CallOption
 
 
 

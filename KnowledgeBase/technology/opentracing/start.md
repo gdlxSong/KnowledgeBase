@@ -4,6 +4,8 @@ balabala~~
 
 ## 资料来源
 
+specification: https://opentracing.io/specification/
+
 [1] https://developer.aliyun.com/article/514488
 
 [2] http://peter.bourgon.org/blog/2017/02/21/metrics-tracing-and-logging.html?spm=a2c6h.12873639.0.0.61b453f6kQ1TwU
@@ -34,10 +36,13 @@ balabala~~
     其次我是否可以根据这一原理，结合open tracing的实现去做一个流量跟踪系统。
 ```
 
+
+
+
+
 ## 总结和展望
 
 balabala！~~
-
 
 
 

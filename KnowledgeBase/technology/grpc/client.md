@@ -80,7 +80,7 @@ type ClientConnInterface interface {
 在Client Stream中会使用NewStream， Client Unary 使用Invoke。
 
 
-那么现在看一下Invoke的跟脚：
+那么现在看一下Invoke的根脚：
 
 
 >https://github.com/grpc/grpc-go/blob/master/call.go#L29
@@ -272,7 +272,7 @@ func newClientStream(ctx context.Context, desc *StreamDesc, cc *ClientConn, meth
 ```
 
 
-em~~~, 这个函数有点胖~~，先不管他，然后我们可以得到结论，Invoke和NewStream最终都会调用newClientStream来生成一个stream，而区别在于面向用户的是操作stream还是一个unary rpc。
+em~~~, 这个函数有点胖~~，先不管他，然后我们可以得到结论，Invoke和NewStream最终都会调用newClientStream来生成一个stream，而区别在于面向用户的是操作stream还是一个unary rpc client。
 
 
 

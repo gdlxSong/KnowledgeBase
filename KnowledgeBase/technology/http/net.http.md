@@ -35,5 +35,8 @@ output:
 
 ```
 
+原因在于两个url的两个标准不一致导致的。
+
+
 
 [1] https://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1

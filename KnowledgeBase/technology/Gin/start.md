@@ -14,6 +14,8 @@
 
 1. gin.Context::Get()返回一个interface{}，这个对象是什么时候实现解析的，还是之前gin.Context.Set进去的？
 
+    是的，在gin.Context设置变量用于在中间件之间传递
+
 2. gin的数据模型绑定，bindJson, BindXML...
     https://github.com/gin-gonic/gin#model-binding-and-validation
 
