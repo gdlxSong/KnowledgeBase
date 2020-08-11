@@ -5,5 +5,3 @@
 
 [1] https://tools.ietf.org/html/rfc5234
 
-
-
