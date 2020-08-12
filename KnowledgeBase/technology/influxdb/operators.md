@@ -31,19 +31,56 @@
 `CREATE RETENTION POLICY`
 
 ```bash
-> CREATE RETENTION POLICY "two_hours" ON "food_data" DURATION 2h REPLICATION 1 DEFAULT
+> CREATE RETENTION POLICY "rp_name" ON "db_name" DURATION 2h REPLICATION 1 DEFAULT
+# replication 1：副本个数，一般为1就可以了；
+# default：设置为默认策略
 ```
-#### 创建continuous query
+#### 修改rp
+
+```bash
+alter retention policy "rp_name" on "db_name" duration 30d default
+```
+
+#### 删除rp
+
+```bash
+drop retention policy "rp_name" on "db_name"
+```
+
+
+#### 创建连续查询continuous query
+
+InfluxDB的连续查询是在数据库中自动定时启动的一组语句，语句中必须包含 SELECT 关键词和 GROUP BY time() 关键词。
+
+InfluxDB会将查询结果放在指定的数据表中。
+
+目的：使用连续查询是最优的降低采样率的方式，连续查询和存储策略搭配使用将会大大降低InfluxDB的系统占用量。而且使用连续查询后，数据会存放到指定的数据表中，这样就为以后统计不同精度的数据提供了方便。
 
 `CREATE CONTINUOUS QUERY`
 
+>https://www.cnblogs.com/shhnwangjian/p/6897216.html
+
 ```bash
-> CREATE CONTINUOUS QUERY "cq_30m" ON "food_data" BEGIN
+# create syntax
+CREATE CONTINUOUS QUERY <cq_name> ON <database_name>
+[RESAMPLE [EVERY <interval>] [FOR <interval>]]
+BEGIN SELECT <function>(<stuff>)[,<function>(<stuff>)] INTO <different_measurement>
+FROM <current_measurement> [WHERE <stuff>] GROUP BY time(<interval>)[,<stuff>]
+END
+
+# example
+CREATE CONTINUOUS QUERY "cq_30m" ON "food_data" BEGIN
   SELECT mean("website") AS "mean_website",mean("phone") AS "mean_phone"
   INTO "a_year"."downsampled_orders"
   FROM "orders"
   GROUP BY time(30m)
 END
+
+# example
+CREATE CONTINUOUS QUERY wj_30m ON shhnwangjian BEGIN SELECT mean(connected_clients), MEDIAN(connected_clients), MAX(connected_clients), MIN(connected_clients) INTO redis_clients_30m FROM redis_clients GROUP BY ip,port,time(30m)
+
+# example
+CREATE CONTINUOUS QUERY wj_30m ON shhnwangjian_30 BEGIN SELECT mean(connected_clients), MEDIAN(connected_clients), MAX(connected_clients), MIN(connected_clients) INTO shhnwangjian_30.autogen.redis_clients_30m FROM shhnwangjian.autogen.redis_clients GROUP BY ip,port,time(30m)
 ```
 
 #### 查看当前数据库的所有的measurement
@@ -59,6 +96,10 @@ series表示这个表里面的数据，可以在图表上画成几条线，serie
 
 时序数据库中是不需要创建表的。
 
+
+### 产看当前数据库的retention policy
+
+`show retention policies on "db_name"`
 
 
 ### 数据操作
@@ -105,6 +146,24 @@ time                                     external      internal     machine    t
 ```
 
 
+#### Group By
+
+注意
+
+
+
+
+### influxdb的字段类型
+
+```bash
+> select uptime::integer from iot_gateway
+```
+
+influxdb的字段value类型有integer，float，boolean，string，可以通过在select <fieldname>[::<type>]指定，如果指定正确（解析正确），那么返回，否之返回空结果集。
+
+
+
+
 ### 用户管理
 
 
@@ -121,6 +180,9 @@ DROP USER username
 
 SET PASSWORD FOR admin ='test'
 ```
+
+
+
 
 
 需要注意的是：username可以用双引号包裹或者不:[`"username"` | `username`], password必须使用单引号包裹。

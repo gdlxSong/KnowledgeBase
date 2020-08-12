@@ -17,3 +17,7 @@ systemctl start influxdb
 
 
 https://www.cnblogs.com/WeaRang/p/12421842.html
+
+## insall
+
+>https://blog.csdn.net/qq_34158117/article/details/90597304
